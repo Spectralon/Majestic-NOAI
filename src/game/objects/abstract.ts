@@ -14,3 +14,13 @@ export interface IMovable {
 
 export interface IEntity extends IId, ITickable, IMovable {
 }
+
+export interface IItem {
+    readonly type: string;
+    readonly stackable: boolean;
+}
+
+export interface IItemInstance extends IItem, IId {
+    count: number;
+}
+

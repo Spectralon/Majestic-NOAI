@@ -1,7 +1,11 @@
 import {IEntity} from "./abstract";
 import {Vector2} from "./core";
 
+import {IInventory, Inventory} from "./Inventory";
+
 export class Player implements IEntity {
+    readonly inventory: IInventory = new Inventory();
+
     get position(): Vector2 {
         return this._position;
     }
