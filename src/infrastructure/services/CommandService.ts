@@ -12,7 +12,7 @@ export class CommandService implements ICommandService {
     }
 
     async execute<T>(args: Record<string, unknown>): Promise<T> {
-        let type: string = args.type as string;
+        const type: string = args.type as string;
         return this._commands.find(e => e.type === type)?.execute(args);
     }
 }

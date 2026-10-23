@@ -2,8 +2,11 @@ import {IId} from "../../game/objects/abstract";
 
 export interface IGameRegistry {
     register(entity: IId, id?: string | undefined): void;
+
     unregister(entity: IId): void;
+
     getEntity(entityId: string): IId | undefined;
+
     getId(entity: IId): string | undefined;
 }
 
@@ -15,11 +18,11 @@ export class GameRegistry implements IGameRegistry {
 
     register(entity: IId, id: string | undefined = undefined): void {
         if (id !== undefined && this._objects.has(id)) {
-            let existing = this._objects.get(id);
+            const existing = this._objects.get(id);
             if (existing)
                 this.unregister(existing);
         }
-        let key = id ?? this.nextId();
+        const key = id ?? this.nextId();
         this._objects.set(key, entity);
         this._index.set(entity, key);
     }
@@ -27,7 +30,7 @@ export class GameRegistry implements IGameRegistry {
     unregister(entity: IId): void {
         if (!this._index.has(entity))
             return;
-        let key = this._index.get(entity);
+        const key = this._index.get(entity);
         if (key)
             this._objects.delete(key);
         this._index.delete(entity);

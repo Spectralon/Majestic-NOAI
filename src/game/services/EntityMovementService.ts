@@ -7,11 +7,13 @@ export interface IEntityMovementService {
 }
 
 class EntityMovementService implements IEntityMovementService {
-    constructor(private readonly _registry: IGameRegistry) {}
-
-    async move(entityId: string, target: Vector2): Promise<void> {
-        let entity: IEntity = this._registry.getEntity(entityId) as IEntity;
-        return entity.move(target);
+    constructor(
+        private readonly _registry: IGameRegistry
+    ) {
     }
 
+    async move(entityId: string, target: Vector2): Promise<void> {
+        const entity: IEntity = this._registry.getEntity(entityId) as IEntity;
+        return entity.move(target);
+    }
 }

@@ -9,8 +9,8 @@ export class MovePlayer implements ICommand<void> {
     }
 
     execute(args: Record<string, unknown>): Promise<void> {
-        let playerId: string = args.playerId as string;
-        let target: Vector2 = new Vector2(args.x as number, args.y as number);
+        const playerId: string = args.playerId as string;
+        const target: Vector2 = new Vector2(args.x as number, args.y as number);
         return this._mover.move(playerId, target);
     }
 }

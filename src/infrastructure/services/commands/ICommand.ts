@@ -3,4 +3,3 @@ export interface ICommand<T> {
 
     execute(args: Record<string, unknown>): Promise<T>;
 }
-
