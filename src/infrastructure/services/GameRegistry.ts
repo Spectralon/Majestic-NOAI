@@ -2,11 +2,8 @@ import {IId} from "../../game/objects/abstract";
 
 export interface IGameRegistry {
     register(entity: IId, id?: string | undefined): void;
-
     unregister(entity: IId): void;
-
     getEntity(entityId: string): IId | undefined;
-
     getId(entity: IId): string | undefined;
 }
 
