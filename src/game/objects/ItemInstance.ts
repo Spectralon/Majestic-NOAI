@@ -1,6 +1,7 @@
 import {IItem, IItemInstance} from "./abstract";
 
 export class ItemInstance implements IItemInstance {
+    declare readonly id: string;
     readonly stackable: boolean;
     readonly type: string;
 

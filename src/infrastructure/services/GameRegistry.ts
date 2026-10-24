@@ -6,8 +6,6 @@ export interface IGameRegistry {
     unregister(entity: IId): void;
 
     getEntity(entityId: string): IId | undefined;
-
-    getId(entity: IId): string | undefined;
 }
 
 export class GameRegistry implements IGameRegistry {
@@ -16,15 +14,21 @@ export class GameRegistry implements IGameRegistry {
 
     private _counter: number = 0;
 
-    register(entity: IId, id: string | undefined = undefined): void {
+    register(obj: IId, id: string | undefined = undefined): void {
         if (id !== undefined && this._objects.has(id)) {
             const existing = this._objects.get(id);
             if (existing)
                 this.unregister(existing);
         }
         const key = id ?? this.nextId();
-        this._objects.set(key, entity);
-        this._index.set(entity, key);
+        Object.defineProperty(obj, 'id', {
+            value: key,
+            writable: false,
+            configurable: false,
+            enumerable: true,
+        });
+        this._objects.set(key, obj);
+        this._index.set(obj, key);
     }
 
     unregister(entity: IId): void {
@@ -38,10 +42,6 @@ export class GameRegistry implements IGameRegistry {
 
     getEntity(entityId: string): IId | undefined {
         return this._objects.get(entityId);
-    }
-
-    getId(entity: IId): string | undefined {
-        return this._index.get(entity);
     }
 
     private nextId(): string {

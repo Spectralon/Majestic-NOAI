@@ -4,6 +4,7 @@ import {Vector2} from "./core";
 import {IInventory, Inventory} from "./Inventory";
 
 export class Player implements IEntity {
+    declare readonly id: string;
     readonly inventory: IInventory = new Inventory();
 
     get position(): Vector2 {

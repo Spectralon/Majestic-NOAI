@@ -1,6 +1,7 @@
 import {Vector2} from "./core";
 
 export interface IId {
+    readonly id: string;
 }
 
 export interface ITickable {
@@ -9,6 +10,7 @@ export interface ITickable {
 
 export interface IMovable {
     readonly position: Vector2;
+
     move(target: Vector2): Promise<void>;
 }
 
