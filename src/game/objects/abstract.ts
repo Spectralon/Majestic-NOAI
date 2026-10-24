@@ -30,11 +30,11 @@ export interface IItem {
     readonly type: string;
     readonly stackable: boolean;
 
-    onPickup?(player: Player, world: World): void;
+    onPickup?(player: Player): void;
 
-    onDrop?(player: Player, world: World): void;
+    onDrop?(player: Player): void;
 
-    onUse?(player: Player, world: World): void;
+    onUse?(player: Player): void;
 }
 
 export interface IItemInstance extends IItem, IId {

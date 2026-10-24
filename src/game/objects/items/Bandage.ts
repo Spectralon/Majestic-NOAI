@@ -1,6 +1,5 @@
 import {IItem} from "../abstract";
 import {Player} from "../Player";
-import {World} from "../World";
 import {IEffectService} from "../../services/EffectService";
 
 export class Bandage implements IItem {
@@ -12,7 +11,7 @@ export class Bandage implements IItem {
     ) {
     }
 
-    onUse(player: Player, world: World) {
+    onUse(player: Player) {
         this._effectService.addEffect(this.type, player);
     }
 }

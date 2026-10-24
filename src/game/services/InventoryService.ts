@@ -10,6 +10,8 @@ export interface IInventoryService {
     add(playerId: string, item: IItemInstance): Promise<void>;
 
     remove(playerId: string, itemId: string, count?: number): Promise<IItemInstance>;
+
+    use(playerId: string, itemId: string): Promise<void>;
 }
 
 export class InventoryService implements IInventoryService {
@@ -37,6 +39,15 @@ export class InventoryService implements IInventoryService {
             throw new Error(`Could not find item id ${itemId} in inventory of ${playerId}`);
         inv.remove(item, count || item.count);
         return Promise.resolve(item);
+    }
+
+    use(playerId: string, itemId: string): Promise<void> {
+        const player = Utils.getPlayer(this._registry, playerId);
+        const item: IItemInstance | undefined = player.inventory.items.find(e => e.id === itemId);
+        if (!item)
+            throw new Error(`Could not find item id ${itemId} in inventory of ${playerId}`);
+        item.onUse?.(player);
+        return Promise.resolve();
     }
 
     private getInventory(playerId: string): IInventory {

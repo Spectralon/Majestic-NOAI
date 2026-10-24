@@ -1,6 +1,5 @@
 import {IItem} from "../abstract";
 import {Player} from "../Player";
-import {World} from "../World";
 
 export class Armor implements IItem {
     readonly type: string = 'armor';
@@ -9,7 +8,7 @@ export class Armor implements IItem {
     constructor(private readonly _addArmor: number) {
     }
 
-    onUse(player: Player, world: World) {
+    onUse(player: Player) {
         player.armor += this._addArmor;
     }
 }
