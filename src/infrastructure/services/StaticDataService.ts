@@ -9,6 +9,9 @@ export class StaticDataService {
             },
             groundLifetimeTicks: 600,
         },
+        EFFECTS: {
+            bandage: {ttl: 10}
+        },
         tickIntervalMs: 100,
     } as const;
 }

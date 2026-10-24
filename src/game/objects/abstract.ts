@@ -16,6 +16,13 @@ export interface IMovable {
     move(target: Vector2): Promise<void>;
 }
 
+export interface IEffect<T> {
+    readonly type: string;
+    readonly ttl?: number;
+
+    apply(target: T): void;
+}
+
 export interface IEntity extends IId, ITickable, IMovable {
 }
 
