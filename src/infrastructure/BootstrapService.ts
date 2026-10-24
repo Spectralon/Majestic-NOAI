@@ -10,15 +10,15 @@ import {EntityMovementService, IEntityMovementService} from "../game/services/En
 
 export class BootstrapService {
     async main(): Promise<void> {
-        const staticDataService: StaticDataService = new StaticDataService();
+        const staticData: StaticDataService = new StaticDataService();
         const registry: IGameRegistry = new GameRegistry();
-        const factory: GameFactory = new GameFactory(registry, staticDataService);
+        const factory: GameFactory = new GameFactory(registry, staticData);
 
-        const gameLoop = new GameLoop(staticDataService);
+        const gameLoop = new GameLoop(staticData);
 
         const movementService: IEntityMovementService = new EntityMovementService(registry);
         const inventoryService: IInventoryService = new InventoryService(registry, factory);
-        const groundItemService: IGroundItemService = new GroundItemService(registry, factory, gameLoop, inventoryService);
+        const groundItemService: IGroundItemService = new GroundItemService(registry, factory, gameLoop, inventoryService, staticData);
         const effectService: IEffectService = new EffectService(factory, gameLoop);
 
         const commandService: CommandService = new CommandService();
