@@ -12,6 +12,8 @@ export interface IInventoryService {
     remove(playerId: string, itemId: string, count?: number): Promise<IItemInstance>;
 
     use(playerId: string, itemId: string): Promise<void>;
+
+    getInventory(playerId: string): IInventory;
 }
 
 export class InventoryService implements IInventoryService {
@@ -50,7 +52,7 @@ export class InventoryService implements IInventoryService {
         return Promise.resolve();
     }
 
-    private getInventory(playerId: string): IInventory {
+    getInventory(playerId: string): IInventory {
         return Utils.getPlayer(this._registry, playerId).inventory;
     }
 }
