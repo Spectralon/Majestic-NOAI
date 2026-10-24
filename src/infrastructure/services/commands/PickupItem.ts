@@ -15,5 +15,4 @@ export class PickupItem implements ICommand<void> {
         await this._groundItemService.pickup(playerId, itemId);
         return Promise.resolve();
     }
-
 }

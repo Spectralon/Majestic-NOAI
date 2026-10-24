@@ -1,4 +1,6 @@
 import {Vector2} from "./core";
+import {Player} from "./Player";
+import {World} from "./World";
 
 export interface IId {
     readonly id: string;
@@ -20,6 +22,12 @@ export interface IEntity extends IId, ITickable, IMovable {
 export interface IItem {
     readonly type: string;
     readonly stackable: boolean;
+
+    onPickup?(player: Player, world: World): void;
+
+    onDrop?(player: Player, world: World): void;
+
+    onUse?(player: Player, world: World): void;
 }
 
 export interface IItemInstance extends IItem, IId {

@@ -10,7 +10,7 @@ export interface IGameFactory {
     createDrop(item: IItemInstance): GroundItem;
 }
 
-class GameFactory implements IGameFactory {
+export class GameFactory implements IGameFactory {
     private readonly _config;
     private readonly _itemPrototypes: IItem[] = [];
 

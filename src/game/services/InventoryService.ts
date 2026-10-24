@@ -1,5 +1,4 @@
 import {IItemInstance} from "../objects/abstract";
-import {Player} from "../objects/Player";
 import {IGameRegistry} from "../../infrastructure/services/GameRegistry";
 import {IInventory} from "../objects/Inventory";
 import {IGameFactory} from "../../infrastructure/GameFactory";
