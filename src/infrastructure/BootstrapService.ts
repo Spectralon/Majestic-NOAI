@@ -34,6 +34,8 @@ export class BootstrapService {
             movementService,
         );
 
+        gameLoop.on('tick', e => server.broadcast('tick', gameLoop.world));
+
         await server.start();
         gameLoop.start();
     }

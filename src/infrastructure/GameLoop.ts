@@ -1,7 +1,8 @@
 import {World} from "../game/objects/World";
 import {StaticDataService} from "./services/StaticDataService";
+import EventEmitter from "node:events";
 
-export class GameLoop {
+export class GameLoop extends EventEmitter {
     get world(): World {
         if (!this._world)
             throw new Error("Game Loop is not started yet!");
@@ -14,12 +15,13 @@ export class GameLoop {
     private readonly _tickIntervalMs: number;
 
     constructor(staticData: StaticDataService) {
-        this._tickIntervalMs = staticData.config.tickIntervalMs;
+        super();
+        this._tickIntervalMs = staticData.config.WORLD.tickIntervalMs;
     }
 
     start(): void {
         this._world = new World();
-        this._interval = setInterval(this.tick, this._tickIntervalMs);
+        this._interval = setInterval(() => this.tick(), this._tickIntervalMs);
     }
 
     stop(): void {
@@ -32,5 +34,6 @@ export class GameLoop {
 
     private tick() {
         this._world?.tick();
+        this.emit('tick');
     }
 }
