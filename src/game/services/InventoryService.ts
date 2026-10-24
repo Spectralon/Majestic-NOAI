@@ -15,15 +15,23 @@ export class InventoryService implements IInventoryService {
     ) {
     }
 
-    add(playerId: string, item: IItemInstance): Promise<void> {
+    async add(playerId: string, item: IItemInstance): Promise<void> {
+        const inv = this.getInventory(playerId);
+        inv.add(item);
         return Promise.resolve(undefined);
     }
 
-    remove(playerId: string, item: IItemInstance): Promise<void> {
+    async remove(playerId: string, item: IItemInstance): Promise<void> {
+        const inv = this.getInventory(playerId);
+        inv.remove(item);
         return Promise.resolve(undefined);
     }
 
     private getInventory(playerId: string): IInventory {
-        return (this._registry.getEntity(playerId) as Player).inventory;
+        return this.getPlayer(playerId).inventory;
+    }
+
+    private getPlayer(playerId: string) {
+        return this._registry.getEntity(playerId) as Player;
     }
 }
