@@ -12,6 +12,7 @@ import {SpawnPlayer} from "./commands/SpawnPlayer";
 import {GameFactory} from "../GameFactory";
 import {GameLoop} from "../GameLoop";
 import {StaticDataService} from "./StaticDataService";
+import {SpawnItem} from "./commands/SpawnItem";
 
 export interface ICommandService {
     execute<T>(args: Record<string, unknown>): Promise<T>;
@@ -36,6 +37,7 @@ export class CommandService implements ICommandService {
             new GetInventory(inventoryService),
             new MovePlayer(movementService),
             new SpawnPlayer(factory, gameLoop, staticData),
+            new SpawnItem(factory, gameLoop, staticData),
         );
     }
 
