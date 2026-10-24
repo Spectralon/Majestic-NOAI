@@ -5,7 +5,9 @@ import {IEntityMovementService} from "../../../game/services/EntityMovementServi
 export class MovePlayer implements ICommand<void> {
     readonly type: string = 'move';
 
-    constructor(private readonly _mover: IEntityMovementService) {
+    constructor(
+        private readonly _mover: IEntityMovementService
+    ) {
     }
 
     execute(args: Record<string, unknown>): Promise<void> {

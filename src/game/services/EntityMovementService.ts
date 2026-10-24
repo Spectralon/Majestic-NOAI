@@ -6,7 +6,7 @@ export interface IEntityMovementService {
     move(entityId: string, target: Vector2): Promise<void>;
 }
 
-class EntityMovementService implements IEntityMovementService {
+export class EntityMovementService implements IEntityMovementService {
     constructor(
         private readonly _registry: IGameRegistry
     ) {
