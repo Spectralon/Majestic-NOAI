@@ -24,6 +24,13 @@ export class BootstrapService {
         const commandService: CommandService = new CommandService();
 
         factory.init(effectService);
-        commandService.init(inventoryService, groundItemService, movementService)
+        commandService.init(
+            factory,
+            gameLoop,
+            staticData,
+            inventoryService,
+            groundItemService,
+            movementService,
+        );
     }
 }

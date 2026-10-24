@@ -10,6 +10,8 @@ import {Armor} from "../game/objects/items/Armor";
 import {Medkit} from "../game/objects/items/Medkit";
 import {IEffectService} from "../game/services/EffectService";
 import {BandageEffect} from "../game/objects/effects/BandageEffect";
+import {Vector2} from "../game/objects/core";
+import {Player} from "../game/objects/Player";
 
 export interface IGameFactory {
     createItem(type: string, count?: number): IItemInstance;
@@ -17,6 +19,8 @@ export interface IGameFactory {
     createDrop(item: IItemInstance): GroundItem;
 
     createEffect<T>(effectType: string, target: T): EffectInstance<T>;
+
+    createPLayer(initialPosition: Vector2): Player;
 }
 
 export class GameFactory implements IGameFactory {
@@ -29,6 +33,13 @@ export class GameFactory implements IGameFactory {
         _staticDataService: StaticDataService
     ) {
         this._config = _staticDataService.config;
+    }
+
+    createPLayer(initialPosition: Vector2): Player {
+        const cfg = this._config.PLAYER;
+        const player: Player = new Player(cfg.hp, cfg.armor, cfg.ammo, initialPosition);
+        this._registry.register(player);
+        return player;
     }
 
     init(effectService: IEffectService): void {

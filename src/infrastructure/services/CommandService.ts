@@ -8,6 +8,10 @@ import {GetInventory} from "./commands/GetInventory";
 import {IGroundItemService} from "../../game/services/GroundItemService";
 import {MovePlayer} from "./commands/MovePlayer";
 import {IEntityMovementService} from "../../game/services/EntityMovementService";
+import {SpawnPlayer} from "./commands/SpawnPlayer";
+import {GameFactory} from "../GameFactory";
+import {GameLoop} from "../GameLoop";
+import {StaticDataService} from "./StaticDataService";
 
 export interface ICommandService {
     execute<T>(args: Record<string, unknown>): Promise<T>;
@@ -17,6 +21,9 @@ export class CommandService implements ICommandService {
     private _commands: ICommand<any>[] = [];
 
     init(
+        factory: GameFactory,
+        gameLoop: GameLoop,
+        staticData: StaticDataService,
         inventoryService: IInventoryService,
         groundItemService: IGroundItemService,
         movementService: IEntityMovementService
@@ -28,6 +35,7 @@ export class CommandService implements ICommandService {
             new UseItem(inventoryService),
             new GetInventory(inventoryService),
             new MovePlayer(movementService),
+            new SpawnPlayer(factory, gameLoop, staticData),
         );
     }
 

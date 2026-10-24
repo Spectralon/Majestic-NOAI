@@ -40,7 +40,9 @@ export class Player implements IEntity {
         private readonly _hp: ClampedNumber,
         private readonly _armor: ClampedNumber,
         private readonly _ammo: ClampedNumber,
+        initialPosition: Vector2 = new Vector2(0, 0),
     ) {
+        this._position = initialPosition;
     }
 
     async move(target: Vector2): Promise<void> {
