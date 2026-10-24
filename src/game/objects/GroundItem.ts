@@ -4,6 +4,10 @@ import {Vector2} from "./core";
 export class GroundItem implements IEntity {
     declare readonly id: string;
 
+    get item(): IItemInstance {
+        return this._item;
+    }
+
     get position(): Vector2 {
         return this._position;
     }

@@ -6,7 +6,9 @@ import {IGameFactory} from "../../infrastructure/GameFactory";
 import * as Utils from "../../utils/Utils";
 
 export interface IInventoryService {
-    add(playerId: string, itemType: string, count: number): Promise<void>;
+    addNew(playerId: string, itemType: string, count: number): Promise<void>;
+
+    add(playerId: string, item: IItemInstance): Promise<void>;
 
     remove(playerId: string, itemId: string, count?: number): Promise<IItemInstance>;
 }
@@ -18,9 +20,13 @@ export class InventoryService implements IInventoryService {
     ) {
     }
 
-    async add(playerId: string, itemType: string, count: number): Promise<void> {
-        const inv = this.getInventory(playerId);
+    async addNew(playerId: string, itemType: string, count: number): Promise<void> {
         const item: IItemInstance = this._factory.createItem(itemType, count);
+        return await this.add(playerId, item);
+    }
+
+    async add(playerId: string, item: IItemInstance): Promise<void> {
+        const inv = this.getInventory(playerId);
         inv.add(item);
         return Promise.resolve();
     }

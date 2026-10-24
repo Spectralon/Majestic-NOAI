@@ -7,6 +7,8 @@ import {GameLoop} from "../../infrastructure/GameLoop";
 
 export interface IGroundItemService {
     drop(playerId: string, itemId: string): Promise<GroundItem>;
+
+    pickup(playerId: string, itemId: string): Promise<void>;
 }
 
 export class GroundItemService implements IGroundItemService {
@@ -25,6 +27,12 @@ export class GroundItemService implements IGroundItemService {
         await groundItem.move(player.position);
         this._gameLoop.world.spawn(groundItem);
         return Promise.resolve(groundItem);
+    }
+
+    async pickup(playerId: string, itemId: string): Promise<void> {
+        const groundItem = Utils.getGroundItem(this._registry, itemId);
+        this._gameLoop.world.despawn(groundItem);
+        return this._inventoryService.add(playerId, groundItem.item);
     }
 
 }
