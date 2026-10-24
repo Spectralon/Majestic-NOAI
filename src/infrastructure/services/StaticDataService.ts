@@ -3,14 +3,14 @@ export class StaticDataService {
         ITEMS: {
             prototypes: {
                 medkit: {},
-                armor: {},
+                armor: {addArmor: 10},
                 bandage: {},
-                flare: {},
+                ammo: {addAmmo: 10},
             },
             groundLifetimeTicks: 600,
         },
         EFFECTS: {
-            bandage: {ttl: 10}
+            bandage: {hpPerTick: 10, ttl: 10}
         },
         tickIntervalMs: 100,
     } as const;

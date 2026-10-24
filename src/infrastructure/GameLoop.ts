@@ -4,7 +4,7 @@ import {StaticDataService} from "./services/StaticDataService";
 export class GameLoop {
     get world(): World {
         if (!this._world)
-            throw new Error("Game world is not initialized yet!");
+            throw new Error("Game Loop is not started yet!");
         return this._world;
     }
 
@@ -18,10 +18,12 @@ export class GameLoop {
     }
 
     start(): void {
+        this._world = new World();
         this._interval = setInterval(this.tick, this._tickIntervalMs);
     }
 
     stop(): void {
+        this._world = undefined;
         if (!this._interval)
             return;
         clearInterval(this._interval);

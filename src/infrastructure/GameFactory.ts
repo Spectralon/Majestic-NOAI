@@ -4,6 +4,12 @@ import {ItemInstance} from "../game/objects/ItemInstance";
 import {StaticDataService} from "./services/StaticDataService";
 import {GroundItem} from "../game/objects/GroundItem";
 import {EffectInstance} from "../game/objects/EffectInstance";
+import {Ammo} from "../game/objects/items/Ammo";
+import {Bandage} from "../game/objects/items/Bandage";
+import {Armor} from "../game/objects/items/Armor";
+import {Medkit} from "../game/objects/items/Medkit";
+import {IEffectService} from "../game/services/EffectService";
+import {BandageEffect} from "../game/objects/effects/BandageEffect";
 
 export interface IGameFactory {
     createItem(type: string, count?: number): IItemInstance;
@@ -23,6 +29,20 @@ export class GameFactory implements IGameFactory {
         _staticDataService: StaticDataService
     ) {
         this._config = _staticDataService.config;
+    }
+
+    init(effectService: IEffectService): void {
+        const itemsCfg = this._config.ITEMS.prototypes;
+        this._itemPrototypes.push(
+            new Ammo(itemsCfg.ammo.addAmmo),
+            new Armor(itemsCfg.armor.addArmor),
+            new Bandage(effectService),
+            new Medkit()
+        );
+        const effectsCfg = this._config.EFFECTS;
+        this._effectPrototypes.push(
+            new BandageEffect(effectsCfg.bandage.hpPerTick, effectsCfg.bandage.ttl)
+        );
     }
 
     createItem(type: string, count?: number): IItemInstance {
