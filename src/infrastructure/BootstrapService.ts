@@ -7,13 +7,13 @@ import {CommandService} from "./services/CommandService";
 import {IInventoryService, InventoryService} from "../game/services/InventoryService";
 import {GroundItemService, IGroundItemService} from "../game/services/GroundItemService";
 import {EntityMovementService, IEntityMovementService} from "../game/services/EntityMovementService";
+import {GameServer} from "./GameServer";
 
 export class BootstrapService {
     async main(): Promise<void> {
         const staticData: StaticDataService = new StaticDataService();
         const registry: IGameRegistry = new GameRegistry();
         const factory: GameFactory = new GameFactory(registry, staticData);
-
         const gameLoop = new GameLoop(staticData);
 
         const movementService: IEntityMovementService = new EntityMovementService(registry);
@@ -22,6 +22,7 @@ export class BootstrapService {
         const effectService: IEffectService = new EffectService(factory, gameLoop);
 
         const commandService: CommandService = new CommandService();
+        const server: GameServer = new GameServer(commandService, staticData);
 
         factory.init(effectService);
         commandService.init(
@@ -32,5 +33,8 @@ export class BootstrapService {
             groundItemService,
             movementService,
         );
+
+        await server.start();
+        gameLoop.start();
     }
 }

@@ -22,7 +22,7 @@ export class GroundItemService implements IGroundItemService {
         private readonly _inventoryService: IInventoryService,
         _staticData: StaticDataService,
     ) {
-        this._pickupRadiusSqr = _staticData.config.groundItemsPickupRadius ** 2;
+        this._pickupRadiusSqr = _staticData.config.PLAYER.groundItemsPickupRadius ** 2;
     }
 
     async drop(playerId: string, itemId: string): Promise<GroundItem> {

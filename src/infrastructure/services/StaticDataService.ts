@@ -2,15 +2,19 @@ import {ClampedNumber} from "../../game/objects/core";
 
 export class StaticDataService {
     readonly config = {
-        tickIntervalMs: 100,
+        SERVER: {
+            wsPort: 3443,
+        },
         PLAYER: {
             hp: new ClampedNumber(0, 100, 50),
             armor: new ClampedNumber(0, 100, 50),
             ammo: new ClampedNumber(0, 20, 10),
+            groundItemsPickupRadius: 10,
         },
         WORLD: {
             width: 1280,
             height: 720,
+            tickIntervalMs: 100,
         },
         ITEMS: {
             prototypes: {
@@ -24,6 +28,5 @@ export class StaticDataService {
         EFFECTS: {
             bandage: {hpPerTick: 10, ttl: 10}
         },
-        groundItemsPickupRadius: 10,
     } as const;
 }
