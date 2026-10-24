@@ -19,13 +19,17 @@ export class GameServer {
             this._clients.add(ws);
             ws.on('message', packet => this.onMessage(ws, packet.toString()));
             ws.on('close', () => this._clients.delete(ws));
-        })
+        });
+
+        console.log(`Server started`);
     }
 
     stop(): void {
         this._wss.close();
         for (const client of this._clients)
             client.close();
+
+        console.log(`Server stopped`);
     }
 
     broadcast(type: string, data?: any) {
