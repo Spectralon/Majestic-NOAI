@@ -11,7 +11,7 @@ export class ItemInstance implements IItemInstance {
 
     set count(value: number) {
         if (value < 0)
-            throw new Error(`Item count could not be negative: ${this}`);
+            throw new Error(`Item count for id ${this.id} of type ${this.type} could not be negative!`);
         this._count = value;
     }
 
