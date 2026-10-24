@@ -1,7 +1,7 @@
 import {IId} from "../../game/objects/abstract";
 
 export interface IGameRegistry {
-    register(entity: IId, id?: string | undefined): void;
+    register(entity: IId, id?: string): void;
 
     unregister(entity: IId): void;
 
@@ -14,8 +14,8 @@ export class GameRegistry implements IGameRegistry {
 
     private _counter: number = 0;
 
-    register(obj: IId, id: string | undefined = undefined): void {
-        if (id !== undefined && this._objects.has(id)) {
+    register(obj: IId, id?: string): void {
+        if (id && this._objects.has(id)) {
             const existing = this._objects.get(id);
             if (existing)
                 this.unregister(existing);

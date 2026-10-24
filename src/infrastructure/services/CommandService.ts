@@ -7,7 +7,7 @@ export interface ICommandService {
 export class CommandService implements ICommandService {
     private _commands: ICommand<any>[] = [];
 
-    initialize(commands: ICommand<any>[]): void {
+    constructor(commands: ICommand<any>[]) {
         this._commands = commands;
     }
 

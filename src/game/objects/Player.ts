@@ -15,7 +15,7 @@ export class Player implements IEntity {
 
     async move(target: Vector2): Promise<void> {
         this._position = target;
-        return Promise.resolve(undefined);
+        return Promise.resolve();
     }
 
     tick(): boolean {

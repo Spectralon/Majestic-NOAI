@@ -27,7 +27,7 @@ export class Inventory implements IInventory {
         const index = this._items.findIndex(e => e.id === item.id);
         if (index < 0)
             throw new Error(`Trying to remove unpresent item with id ${item.id}`);
-        let instance = this._items[index];
+        const instance = this._items[index];
         const left = Math.max(instance.count - count, 0);
         if (item.stackable && left > 0)
             instance.count = left;

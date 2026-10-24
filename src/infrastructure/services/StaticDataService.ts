@@ -1,18 +1,14 @@
 export class StaticDataService {
-    readonly config: any = {
+    readonly config = {
         ITEMS: {
-            medkit: {
-
+            prototypes: {
+                medkit: {},
+                armor: {},
+                bandage: {},
+                flare: {},
             },
-            armor: {
-
-            },
-            bandage: {
-
-            },
-            flare: {
-
-            },
-        }
-    }
+            groundLifetimeTicks: 600,
+        },
+        tickIntervalMs: 100,
+    } as const;
 }
