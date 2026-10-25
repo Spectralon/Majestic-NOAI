@@ -47,7 +47,7 @@ export class GameServer {
             const data = JSON.parse(packet);
             const result = await this._commandService.execute(data);
             if (result)
-                this.sendPacket(ws, 'result', result);
+                this.sendPacket(ws, 'result', {ts: data.ts, data: result});
         } catch (e) {
             this.sendPacket(ws, 'error', e);
         }

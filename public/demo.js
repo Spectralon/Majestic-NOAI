@@ -53,8 +53,8 @@ async function startDemo() {
     }
 }
 
-function spawnPlayer() {
-    sendMessage({type: "spawn"});
+async function spawnPlayer() {
+    return sendMessage({type: "spawn"}, true);
 }
 
 function spawnDrop() {
@@ -75,8 +75,4 @@ function useItem(playerId, itemId) {
 
 function huntDrop(player, item) {
     movePlayer(player.id, getNearPosition(player.position, item.position, config.PLAYER.groundItemsPickupRadius * 0.9));
-}
-
-async function forMs(timeoutMs = 1000) {
-    return new Promise(resolve => setTimeout(resolve, timeoutMs));
 }
