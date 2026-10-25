@@ -35,19 +35,6 @@ export class GameFactory implements IGameFactory {
         this._config = _staticDataService.config;
     }
 
-    createPLayer(initialPosition: Vector2): Player {
-        const cfg = this._config.PLAYER;
-        const player: Player = new Player(
-            cfg.hp.clone(),
-            cfg.armor.clone(),
-            cfg.ammo.clone(),
-            cfg.speed,
-            initialPosition
-        );
-        this._registry.register(player);
-        return player;
-    }
-
     init(effectService: IEffectService): void {
         const itemsCfg = this._config.ITEMS.prototypes;
         this._itemPrototypes.push(
@@ -60,6 +47,19 @@ export class GameFactory implements IGameFactory {
         this._effectPrototypes.push(
             new BandageEffect(effectsCfg.bandage.hpPerTick, effectsCfg.bandage.ttl)
         );
+    }
+
+    createPLayer(initialPosition: Vector2): Player {
+        const cfg = this._config.PLAYER;
+        const player: Player = new Player(
+            cfg.hp.clone(),
+            cfg.armor.clone(),
+            cfg.ammo.clone(),
+            cfg.speed,
+            initialPosition
+        );
+        this._registry.register(player);
+        return player;
     }
 
     createItem(type: string, count?: number): IItemInstance {
