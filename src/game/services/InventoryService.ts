@@ -43,12 +43,13 @@ export class InventoryService implements IInventoryService {
         return Promise.resolve(item);
     }
 
-    use(playerId: string, itemId: string): Promise<void> {
+    async use(playerId: string, itemId: string): Promise<void> {
         const player = Utils.getPlayer(this._registry, playerId);
         const item: IItemInstance | undefined = player.inventory.items.find(e => e.id === itemId);
         if (!item)
             throw new Error(`Could not find item id ${itemId} in inventory of ${playerId}`);
         item.onUse?.(player);
+        await this.remove(playerId, itemId, 1);
         return Promise.resolve();
     }
 
