@@ -19,8 +19,8 @@ export class SpawnItem implements ICommand<void> {
     }
 
     async execute(args: Record<string, unknown>): Promise<void> {
-        const x = Math.random() * this._config.WORLD.width;
-        const y = Math.random() * this._config.WORLD.height;
+        const x = Math.random() * (this._config.WORLD.width - 2 * this._config.PLAYER.radius);
+        const y = Math.random() * (this._config.WORLD.height - 2 * this._config.PLAYER.radius);
         const item = this._factory.createItem(this.randomType());
         const groundItem = this._factory.createDrop(item);
         await groundItem.move({x, y});

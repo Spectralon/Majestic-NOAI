@@ -18,8 +18,8 @@ export class SpawnPlayer implements ICommand<void> {
     }
 
     execute(args: Record<string, unknown>): Promise<void> {
-        const x = Math.random() * this._config.WORLD.width;
-        const y = Math.random() * this._config.WORLD.height;
+        const x = Math.random() * (this._config.WORLD.width - 2 * this._config.PLAYER.radius);
+        const y = Math.random() * (this._config.WORLD.height - 2 * this._config.PLAYER.radius);
         const player: Player = this._factory.createPLayer({x, y});
         this._gameLoop.world.spawn(player);
         return Promise.resolve();
