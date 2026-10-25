@@ -14,15 +14,7 @@ async function startDemo() {
     huntDrop(player(pid1), groundItem(did1));
     huntDrop(player(pid2), groundItem(did2));
 
-    while (true) {
-        const p1p1 = player(pid1).position;
-        const p2p1 = player(pid2).position;
-        await forMs(500);
-        const p1p2 = player(pid1).position;
-        const p2p2 = player(pid2).position;
-        if (len(subtract(p1p2, p1p1)) + len(subtract(p2p2, p2p1)) <= 0.01)
-            break;
-    }
+    await stopped(pid1, pid2);
 
     pickupItem(pid1, did1);
     pickupItem(pid2, did2);
@@ -32,23 +24,16 @@ async function startDemo() {
     useItem(pid1, player(pid1).inventory[0].id);
     useItem(pid2, player(pid2).inventory[0].id);
 
-    // spawnDrop();
-    //
-    // let item3;
-    //
-    // movePlayerNear(player1.id, item3.x, item3.y);
-    // movePlayerNear(player2.id, item3.x, item3.y);
-    //
-    // pickupItem(player1.id, item3.id);
-    // pickupItem(player2.id, item3.id);
+    const did3 = await spawnDrop();
+    await forMs(500);
 
-    function player(id) {
-        return state.players.find(p => p.id === id);
-    }
+    huntDrop(player(pid1), groundItem(did3));
+    huntDrop(player(pid2), groundItem(did3));
 
-    function groundItem(id) {
-        return state.groundItems.find(p => p.id === id);
-    }
+    await stopped(pid1, pid2);
+
+    pickupItem(pid1, did3);
+    pickupItem(pid2, did3);
 }
 
 async function spawnPlayer() {
@@ -73,4 +58,24 @@ function useItem(playerId, itemId) {
 
 function huntDrop(player, item) {
     movePlayer(player.id, getNearPosition(player.position, item.position, config.PLAYER.groundItemsPickupRadius * 0.9));
+}
+
+async function stopped(pid1, pid2) {
+    while (true) {
+        const p1p1 = player(pid1).position;
+        const p2p1 = player(pid2).position;
+        await forMs(500);
+        const p1p2 = player(pid1).position;
+        const p2p2 = player(pid2).position;
+        if (len(subtract(p1p2, p1p1)) + len(subtract(p2p2, p2p1)) <= 0.01)
+            break;
+    }
+}
+
+function player(id) {
+    return state.players.find(p => p.id === id);
+}
+
+function groundItem(id) {
+    return state.groundItems.find(p => p.id === id);
 }

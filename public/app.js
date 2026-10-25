@@ -117,7 +117,7 @@ function drawPlayer(player) {
     function drawLabel(player) {
         canvas.fillStyle = "gray";
         canvas.font = "12px monospace";
-        canvas.fillText(player.id, x - r, y - r - barInterval);
+        canvas.fillText(player.id, x - r, y - r - barInterval * 2);
     }
 
     function drawHP(player) {
