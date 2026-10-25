@@ -2,6 +2,7 @@ import {ICommand} from "./ICommand";
 import {IGameFactory} from "../../GameFactory";
 import {StaticDataService} from "../StaticDataService";
 import {GameLoop} from "../../GameLoop";
+import {Vector2} from "../../../game/objects/core";
 
 export class SpawnItem implements ICommand<void> {
     readonly type: string = 'spawn_item';
@@ -23,7 +24,7 @@ export class SpawnItem implements ICommand<void> {
         const y = Math.random() * (this._config.WORLD.height - 2 * this._config.PLAYER.radius);
         const item = this._factory.createItem(this.randomType());
         const groundItem = this._factory.createDrop(item);
-        await groundItem.move({x, y});
+        await groundItem.move(new Vector2(x, y));
         this._gameLoop.world.spawn(groundItem);
         return Promise.resolve();
     }
