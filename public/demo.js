@@ -5,10 +5,10 @@ function startDemo() {
     spawnPlayer();
     spawnPlayer();
 
-    // spawnDrop();
-    // spawnDrop();
-    // spawnDrop();
-    //
+    spawnDrop();
+    spawnDrop();
+    spawnDrop();
+
     // let player1;
     // let player2;
     // let item1;
@@ -36,4 +36,8 @@ function startDemo() {
 
 function spawnPlayer() {
     sendMessage({type: "spawn"});
+}
+
+function spawnDrop() {
+    sendMessage({type: "spawn_item"});
 }

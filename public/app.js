@@ -42,10 +42,10 @@ function draw(state) {
     canvasRoot.width = sc(config.WORLD.width - safeBorder);
     canvasRoot.height = sc(config.WORLD.height - safeBorder);
     drawField();
-    for (let player of state.players)
-        drawPlayer(player);
     for (let item of state.groundItems)
         drawItem(item);
+    for (let player of state.players)
+        drawPlayer(player);
 }
 
 function drawField() {
