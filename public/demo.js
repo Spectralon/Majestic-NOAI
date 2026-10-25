@@ -41,6 +41,10 @@ async function spawnDrop() {
     return await sendMessage({type: "spawn_item"}, true);
 }
 
+async function spawnDropAt(pos) {
+    return await sendMessage({type: "spawn_item", x: pos.x, y: pos.y}, true);
+}
+
 function movePlayer(id, position) {
     sendMessage({type: "move", playerId: id, x: position.x, y: position.y});
 }

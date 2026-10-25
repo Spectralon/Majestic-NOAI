@@ -20,8 +20,10 @@ export class SpawnItem implements ICommand<string> {
     }
 
     async execute(args: Record<string, unknown>): Promise<string> {
-        const x = Math.random() * (this._config.WORLD.width - 2 * this._config.PLAYER.radius);
-        const y = Math.random() * (this._config.WORLD.height - 2 * this._config.PLAYER.radius);
+        const x = args.x as number
+            || Math.random() * (this._config.WORLD.width - 2 * this._config.PLAYER.radius);
+        const y = args.y as number
+            || Math.random() * (this._config.WORLD.height - 2 * this._config.PLAYER.radius);
         const item = this._factory.createItem(this.randomType());
         const groundItem = this._factory.createDrop(item);
         await groundItem.move(new Vector2(x, y));
