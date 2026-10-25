@@ -27,7 +27,7 @@ export class StaticDataService {
                 bandage: {color: "#e5e5e5"},
                 ammo: {color: "#86ff83", addAmmo: 10},
             },
-            groundLifetimeTicks: 200,
+            groundLifetimeTicks: 100,
             radius: 10,
         },
         EFFECTS: {
