@@ -1,5 +1,3 @@
-
-
 let config = {};
 let state = new World();
 let output = [];
@@ -26,6 +24,9 @@ function processMessage(e) {
         case 'tick':
             state = getState(e.data);
             draw(state);
+            break;
+        case 'error':
+            console.error('Error:', e);
             break;
         default:
             console.warn('Unable to process message:', e);

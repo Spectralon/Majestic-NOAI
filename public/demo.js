@@ -18,8 +18,8 @@ async function startDemo() {
 
     await forMs(500);
 
-    useItem(pid1, player(pid1).inventory[0].id);
-    useItem(pid2, player(pid2).inventory[0].id);
+    useItem(pid1, player(pid1).inventory[0]?.id);
+    useItem(pid2, player(pid2).inventory[0]?.id);
 
     const did3 = await spawnDrop();
     await forMs(500);
