@@ -26,9 +26,9 @@ async function startDemo() {
             break;
     }
 
-    // pickupItem(player1.id, item1.id);
-    // pickupItem(player2.id, item2.id);
-    //
+    pickupItem(state.players[0].id, state.groundItems[0].id);
+    pickupItem(state.players[1].id, state.groundItems[1].id);
+
     // useItem(player1.id, item1.id);
     // useItem(player2.id, item2.id);
     //
@@ -55,8 +55,12 @@ function movePlayer(id, position) {
     sendMessage({type: "move", playerId: id, x: position.x, y: position.y});
 }
 
+function pickupItem(playerId, groundItemId) {
+    sendMessage({type: "pickup", playerId: playerId, groundItemId: groundItemId});
+}
+
 function huntDrop(player, item) {
-    movePlayer(player.id, getNearPosition(player.position, item.position, config.PLAYER.groundItemsPickupRadius));
+    movePlayer(player.id, getNearPosition(player.position, item.position, config.PLAYER.groundItemsPickupRadius * 0.9));
 }
 
 async function forMs(timeoutMs = 1000) {
