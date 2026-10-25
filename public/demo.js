@@ -1,7 +1,7 @@
 const demoButton = document.getElementById("demo");
 demoButton.onclick = startDemo;
 
-function startDemo() {
+async function startDemo() {
     spawnPlayer();
     spawnPlayer();
 
@@ -9,14 +9,16 @@ function startDemo() {
     spawnDrop();
     spawnDrop();
 
-    // let player1;
-    // let player2;
-    // let item1;
-    // let item2;
-    //
-    // movePlayerNear(player1.id, item1.x, item1.y);
-    // movePlayerNear(player2.id, item2.x, item2.y);
-    //
+    await forMs();
+
+    let player1 = state.players[0];
+    let player2 = state.players[1];
+    let item1 = state.groundItems[0];
+    let item2 = state.groundItems[1];
+
+    movePlayer(player1.id, getNearPosition(player1.position, item1.position, config.PLAYER.groundItemsPickupRadius));
+    movePlayer(player2.id, getNearPosition(player2.position, item2.position, config.PLAYER.groundItemsPickupRadius));
+
     // pickupItem(player1.id, item1.id);
     // pickupItem(player2.id, item2.id);
     //
@@ -40,4 +42,12 @@ function spawnPlayer() {
 
 function spawnDrop() {
     sendMessage({type: "spawn_item"});
+}
+
+function movePlayer(id, position) {
+    sendMessage({type: "move", playerId: id, x: position.x, y: position.y});
+}
+
+async function forMs(timeoutMs = 1000) {
+    return new Promise(resolve => setTimeout(resolve, timeoutMs));
 }

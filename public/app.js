@@ -2,7 +2,7 @@ const canvasRoot = document.getElementById("world");
 const canvas = canvasRoot.getContext("2d");
 
 let config = {};
-let state = {};
+let state = new World();
 
 let scale = 1;
 
@@ -55,8 +55,8 @@ function drawField() {
 
 function drawItem(groundItem) {
     canvas.beginPath();
-    let x = sc(groundItem.x);
-    let y = sc(groundItem.y);
+    let x = sc(groundItem.position.x);
+    let y = sc(groundItem.position.y);
     let r = sc(config.ITEMS.radius);
     canvas.arc(x, y, r, 0, 2 * Math.PI);
     canvas.fillStyle = config.ITEMS.prototypes[groundItem.item.type].color;
@@ -68,8 +68,8 @@ function drawPlayer(player) {
     let barInterval = sc(2);
 
     canvas.beginPath();
-    let x = sc(+player.x);
-    let y = sc(+player.y);
+    let x = sc(+player.position.x);
+    let y = sc(+player.position.y);
     let r = sc(config.PLAYER.radius);
 
     canvas.arc(x, y, r, 0, 2 * Math.PI);
