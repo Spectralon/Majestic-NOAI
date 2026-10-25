@@ -3,6 +3,7 @@ import {Vector2} from "./core";
 
 export class GroundItem implements IEntity {
     declare readonly id: string;
+    readonly kind: string = 'ground_item';
 
     get item(): IItemInstance {
         return this._item;

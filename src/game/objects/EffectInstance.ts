@@ -3,6 +3,7 @@ import {Vector2} from "./core";
 
 export class EffectInstance<T> implements IEntity {
     declare readonly id: string;
+    readonly kind: string = 'effect_instance';
 
     get position(): Vector2 {
         return this._position;

@@ -4,6 +4,7 @@ import {IInventory, Inventory} from "./Inventory";
 
 export class Player implements IEntity {
     declare readonly id: string;
+    readonly kind: string = 'player';
     readonly inventory: IInventory = new Inventory();
 
     get hp(): number {

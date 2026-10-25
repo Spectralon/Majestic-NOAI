@@ -24,6 +24,7 @@ export interface IEffect<T> {
 }
 
 export interface IEntity extends IId, ITickable, IMovable {
+    readonly kind: string;
 }
 
 export interface IItem {
