@@ -2,6 +2,8 @@ const demoButton = document.getElementById("demo");
 demoButton.onclick = startDemo;
 
 async function startDemo() {
+    demoButton.disabled = true;
+
     spawnPlayer();
     spawnPlayer();
 
@@ -11,13 +13,18 @@ async function startDemo() {
 
     await forMs();
 
-    let player1 = state.players[0];
-    let player2 = state.players[1];
-    let item1 = state.groundItems[0];
-    let item2 = state.groundItems[1];
+    huntDrop(state.players[0], state.groundItems[0]);
+    huntDrop(state.players[1], state.groundItems[1]);
 
-    movePlayer(player1.id, getNearPosition(player1.position, item1.position, config.PLAYER.groundItemsPickupRadius));
-    movePlayer(player2.id, getNearPosition(player2.position, item2.position, config.PLAYER.groundItemsPickupRadius));
+    while (true) {
+        const p1p1 = state.players[0].position;
+        const p2p1 = state.players[1].position;
+        await forMs(500);
+        const p1p2 = state.players[0].position;
+        const p2p2 = state.players[1].position;
+        if (len(subtract(p1p2, p1p1)) + len(subtract(p2p2, p2p1)) <= 0.01)
+            break;
+    }
 
     // pickupItem(player1.id, item1.id);
     // pickupItem(player2.id, item2.id);
@@ -46,6 +53,10 @@ function spawnDrop() {
 
 function movePlayer(id, position) {
     sendMessage({type: "move", playerId: id, x: position.x, y: position.y});
+}
+
+function huntDrop(player, item) {
+    movePlayer(player.id, getNearPosition(player.position, item.position, config.PLAYER.groundItemsPickupRadius));
 }
 
 async function forMs(timeoutMs = 1000) {

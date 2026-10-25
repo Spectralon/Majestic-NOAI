@@ -70,7 +70,7 @@ class Vector2 {
  */
 function getNearPosition(pos, target, radius) {
     const delta = subtract(target, pos);
-    const distance = length(delta);
+    const distance = len(delta);
     const dir = normalize(delta, distance);
     return add(multiply(dir, distance - radius), pos);
 }
@@ -110,6 +110,6 @@ function normalize(v, len) {
 /**
  * @param {Vector2} v
  */
-function length(v) {
+function len(v) {
     return Math.sqrt(v.x ** 2 + v.y ** 2);
 }
