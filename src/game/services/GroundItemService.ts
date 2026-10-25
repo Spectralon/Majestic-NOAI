@@ -37,9 +37,11 @@ export class GroundItemService implements IGroundItemService {
     async pickup(playerId: string, itemId: string): Promise<void> {
         const player = Utils.getPlayer(this._registry, playerId);
         const groundItem = Utils.getGroundItem(this._registry, itemId);
-        if (Utils.getDistanceSqr(player, groundItem) > this._pickupRadiusSqr)
+        if (
+            Utils.getDistanceSqr(player, groundItem) > this._pickupRadiusSqr
+            || !this._gameLoop.world.despawn(groundItem)
+        )
             return;
-        this._gameLoop.world.despawn(groundItem);
         return this._inventoryService.add(playerId, groundItem.item);
     }
 
