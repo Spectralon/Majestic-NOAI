@@ -46,6 +46,10 @@ export class ClampedNumber {
     ) {
         this._value = this._initial;
     }
+
+    clone(): ClampedNumber {
+        return new ClampedNumber(this._min, this._max, this._initial);
+    }
 }
 
 export class Constants {
