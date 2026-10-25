@@ -4,7 +4,7 @@ import {StaticDataService} from "../StaticDataService";
 import {GameLoop} from "../../GameLoop";
 import {Vector2} from "../../../game/objects/core";
 
-export class SpawnItem implements ICommand<void> {
+export class SpawnItem implements ICommand<string> {
     readonly type: string = 'spawn_item';
 
     private readonly _config;
@@ -19,14 +19,14 @@ export class SpawnItem implements ICommand<void> {
         this._itemTypes = Object.keys(this._config.ITEMS.prototypes);
     }
 
-    async execute(args: Record<string, unknown>): Promise<void> {
+    async execute(args: Record<string, unknown>): Promise<string> {
         const x = Math.random() * (this._config.WORLD.width - 2 * this._config.PLAYER.radius);
         const y = Math.random() * (this._config.WORLD.height - 2 * this._config.PLAYER.radius);
         const item = this._factory.createItem(this.randomType());
         const groundItem = this._factory.createDrop(item);
         await groundItem.move(new Vector2(x, y));
         this._gameLoop.world.spawn(groundItem);
-        return Promise.resolve();
+        return Promise.resolve(groundItem.id);
     }
 
     randomType() {

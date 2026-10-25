@@ -2,37 +2,35 @@ const demoButton = document.getElementById("demo");
 demoButton.onclick = startDemo;
 
 async function startDemo() {
-    demoButton.disabled = true;
+    const pid1 = await spawnPlayer();
+    const pid2 = await spawnPlayer();
 
-    spawnPlayer();
-    spawnPlayer();
-
-    spawnDrop();
-    spawnDrop();
+    const did1 = await spawnDrop();
+    const did2 = await spawnDrop();
     spawnDrop();
 
     await forMs();
 
-    huntDrop(player(0), groundItem(0));
-    huntDrop(player(1), groundItem(1));
+    huntDrop(player(pid1), groundItem(did1));
+    huntDrop(player(pid2), groundItem(did2));
 
     while (true) {
-        const p1p1 = player(0).position;
-        const p2p1 = player(1).position;
+        const p1p1 = player(pid1).position;
+        const p2p1 = player(pid2).position;
         await forMs(500);
-        const p1p2 = player(0).position;
-        const p2p2 = player(1).position;
+        const p1p2 = player(pid1).position;
+        const p2p2 = player(pid2).position;
         if (len(subtract(p1p2, p1p1)) + len(subtract(p2p2, p2p1)) <= 0.01)
             break;
     }
 
-    pickupItem(player(0).id, groundItem(0).id);
-    pickupItem(player(1).id, groundItem(1).id);
+    pickupItem(pid1, did1);
+    pickupItem(pid2, did2);
 
     await forMs(500);
 
-    useItem(player(0).id, player(0).inventory[0].id);
-    useItem(player(1).id, player(1).inventory[0].id);
+    useItem(pid1, player(pid1).inventory[0].id);
+    useItem(pid2, player(pid2).inventory[0].id);
 
     // spawnDrop();
     //
@@ -44,12 +42,12 @@ async function startDemo() {
     // pickupItem(player1.id, item3.id);
     // pickupItem(player2.id, item3.id);
 
-    function player(i) {
-        return state.players[i];
+    function player(id) {
+        return state.players.find(p => p.id === id);
     }
 
-    function groundItem(i) {
-        return state.groundItems[i];
+    function groundItem(id) {
+        return state.groundItems.find(p => p.id === id);
     }
 }
 
@@ -57,8 +55,8 @@ async function spawnPlayer() {
     return sendMessage({type: "spawn"}, true);
 }
 
-function spawnDrop() {
-    sendMessage({type: "spawn_item"});
+async function spawnDrop() {
+    return await sendMessage({type: "spawn_item"}, true);
 }
 
 function movePlayer(id, position) {

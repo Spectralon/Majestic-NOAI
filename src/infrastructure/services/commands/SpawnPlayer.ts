@@ -5,7 +5,7 @@ import {GameLoop} from "../../GameLoop";
 import {Player} from "../../../game/objects/Player";
 import {Vector2} from "../../../game/objects/core";
 
-export class SpawnPlayer implements ICommand<void> {
+export class SpawnPlayer implements ICommand<string> {
     readonly type: string = 'spawn';
 
     private readonly _config;
@@ -18,11 +18,11 @@ export class SpawnPlayer implements ICommand<void> {
         this._config = staticData.config;
     }
 
-    execute(args: Record<string, unknown>): Promise<void> {
+    execute(args: Record<string, unknown>): Promise<string> {
         const x = Math.random() * (this._config.WORLD.width - 2 * this._config.PLAYER.radius);
         const y = Math.random() * (this._config.WORLD.height - 2 * this._config.PLAYER.radius);
         const player: Player = this._factory.createPLayer(new Vector2(x, y));
         this._gameLoop.world.spawn(player);
-        return Promise.resolve();
+        return Promise.resolve(player.id);
     }
 }
