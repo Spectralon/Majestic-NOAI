@@ -37,7 +37,7 @@ export class GameFactory implements IGameFactory {
 
     createPLayer(initialPosition: Vector2): Player {
         const cfg = this._config.PLAYER;
-        const player: Player = new Player(cfg.hp, cfg.armor, cfg.ammo, initialPosition);
+        const player: Player = new Player(cfg.hp, cfg.armor, cfg.ammo, cfg.speed, initialPosition);
         this._registry.register(player);
         return player;
     }

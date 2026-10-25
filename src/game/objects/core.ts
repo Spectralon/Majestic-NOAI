@@ -6,6 +6,26 @@ export class Vector2 {
         this.x = x;
         this.y = y;
     }
+
+    add(other: Vector2): Vector2 {
+        return new Vector2(this.x + other.x, this.y + other.y);
+    }
+
+    subtract(other: Vector2): Vector2 {
+        return new Vector2(this.x - other.x, this.y - other.y);
+    }
+
+    multiply(k: number): Vector2 {
+        return new Vector2(this.x * k, this.y * k);
+    }
+
+    len(): number {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    normalize(): Vector2 {
+        return this.multiply(1 / this.len());
+    }
 }
 
 export class ClampedNumber {
@@ -26,4 +46,8 @@ export class ClampedNumber {
     ) {
         this._value = this._initial;
     }
+}
+
+export class Constants {
+    static TOLERANCE: number = 0.1;
 }

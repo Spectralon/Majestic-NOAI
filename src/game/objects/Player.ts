@@ -1,5 +1,5 @@
 import {IEntity} from "./abstract";
-import {ClampedNumber, Vector2} from "./core";
+import {ClampedNumber, Constants, Vector2} from "./core";
 import {IInventory, Inventory} from "./Inventory";
 
 export class Player implements IEntity {
@@ -37,21 +37,35 @@ export class Player implements IEntity {
 
     private _position: Vector2 = new Vector2(0, 0);
 
+    private _target?: Vector2;
+
     constructor(
         private readonly _hp: ClampedNumber,
         private readonly _armor: ClampedNumber,
         private readonly _ammo: ClampedNumber,
+        private readonly _speed: number,
         initialPosition: Vector2 = new Vector2(0, 0),
     ) {
         this._position = initialPosition;
     }
 
     async move(target: Vector2): Promise<void> {
-        this._position = target;
+        this._target = target;
         return Promise.resolve();
     }
 
     tick(): boolean {
+        if (this._target) {
+            let delta = this._target.subtract(this._position);
+            let dist = delta.len();
+            if (this._speed >= dist || dist <= Constants.TOLERANCE) {
+                this._position = this._target;
+                this._target = undefined;
+            } else
+                this._position = this._position.add(
+                    delta.normalize().multiply(this._speed)
+                );
+        }
         return true;
     }
 }

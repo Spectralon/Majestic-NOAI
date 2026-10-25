@@ -11,6 +11,7 @@ export class StaticDataService {
             hp: new ClampedNumber(0, 100, 50),
             armor: new ClampedNumber(0, 100, 50),
             ammo: new ClampedNumber(0, 20, 10),
+            speed: 10,
             groundItemsPickupRadius: 30
         },
         WORLD: {
