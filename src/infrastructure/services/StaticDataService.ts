@@ -17,7 +17,7 @@ export class StaticDataService {
         WORLD: {
             color: "#adffff",
             width: 1280,
-            height: 720,
+            height: 640,
             tickIntervalMs: 100,
         },
         ITEMS: {
