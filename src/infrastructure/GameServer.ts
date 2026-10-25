@@ -1,22 +1,26 @@
 import {StaticDataService} from "./services/StaticDataService";
-import {WebSocketServer, WebSocket} from "ws";
+import {WebSocket, WebSocketServer} from "ws";
 import {ICommandService} from "./services/CommandService";
 
 export class GameServer {
     private readonly _wss: WebSocketServer;
     private readonly _clients: Set<WebSocket> = new Set();
 
+    private readonly _config;
+
     constructor(
         private readonly _commandService: ICommandService,
         staticData: StaticDataService
     ) {
-        const cfg = staticData.config.SERVER;
-        this._wss = new WebSocketServer({port: cfg.wsPort});
+        this._config = staticData.config;
+        this._wss = new WebSocketServer({port: this._config.SERVER.wsPort});
     }
 
     async start() {
         this._wss.on('connection', ws => {
             this._clients.add(ws);
+            const {SERVER, ...CLIENT} = this._config;
+            this.sendPacket(ws, 'config', CLIENT);
             ws.on('message', packet => this.onMessage(ws, packet.toString()));
             ws.on('close', () => this._clients.delete(ws));
         });
