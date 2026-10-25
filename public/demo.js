@@ -11,13 +11,10 @@ async function startDemo() {
 
     await forMs();
 
-    huntDrop(player(pid1), groundItem(did1));
-    huntDrop(player(pid2), groundItem(did2));
-
-    await stopped(pid1, pid2);
-
-    pickupItem(pid1, did1);
-    pickupItem(pid2, did2);
+    await Promise.all([
+        huntDrop(player(pid1), groundItem(did1)),
+        huntDrop(player(pid2), groundItem(did2))
+    ]);
 
     await forMs(500);
 
@@ -27,10 +24,10 @@ async function startDemo() {
     const did3 = await spawnDrop();
     await forMs(500);
 
-    huntDrop(player(pid1), groundItem(did3));
-    huntDrop(player(pid2), groundItem(did3));
-
-    await stopped(pid1, pid2);
+    await Promise.all([
+        goNear(player(pid1), groundItem(did3)),
+        goNear(player(pid2), groundItem(did3))
+    ]);
 
     pickupItem(pid1, did3);
     pickupItem(pid2, did3);
@@ -56,8 +53,24 @@ function useItem(playerId, itemId) {
     sendMessage({type: "use", playerId: playerId, itemId: itemId});
 }
 
-function huntDrop(player, item) {
+async function huntDrop(player, item) {
+    await goNear(player, item);
+    pickupItem(player.id, item.id);
+}
+
+async function goNear(player, item) {
     movePlayer(player.id, getNearPosition(player.position, item.position, config.PLAYER.groundItemsPickupRadius * 0.9));
+    await stopped_(player.id);
+}
+
+async function stopped_(playerId) {
+    while (true) {
+        const p1 = player(playerId).position;
+        await forMs(500);
+        const p2 = player(playerId).position;
+        if (len(subtract(p2, p1)) <= 0.01)
+            break;
+    }
 }
 
 async function stopped(pid1, pid2) {
