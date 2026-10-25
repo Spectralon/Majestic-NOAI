@@ -27,7 +27,7 @@ export class SpawnItem implements ICommand<string> {
         const item = this._factory.createItem(this.randomType());
         const groundItem = this._factory.createDrop(item);
         await groundItem.move(new Vector2(x, y));
-        this._gameLoop.world.spawn(groundItem);
+        await this._gameLoop.spawn(groundItem);
         return Promise.resolve(groundItem.id);
     }
 

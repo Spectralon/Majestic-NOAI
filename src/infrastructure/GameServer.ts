@@ -49,7 +49,7 @@ export class GameServer {
             if (result)
                 this.sendPacket(ws, 'result', {ts: data.ts, data: result});
         } catch (e) {
-            this.sendPacket(ws, 'error', e);
+            this.sendPacket(ws, 'error', {type: 'onMessage', payload: packet, err: e});
         }
     }
 

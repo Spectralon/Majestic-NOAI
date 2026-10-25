@@ -4,6 +4,7 @@ export class StaticDataService {
     readonly config = {
         SERVER: {
             wsPort: 3443,
+            storagePingMs: 100,
         },
         PLAYER: {
             color: "#1d395b",

@@ -4,11 +4,11 @@ import {IMovable} from "../game/objects/abstract";
 import {GameLoop} from "../infrastructure/GameLoop";
 
 export function getGroundItem(game: GameLoop, itemId: string): GroundItem {
-    return game.world.getEntity(itemId) as GroundItem;
+    return game.getEntity(itemId) as GroundItem;
 }
 
 export function getPlayer(game: GameLoop, id: string): Player {
-    return game.world.getEntity(id) as Player;
+    return game.getEntity(id) as Player;
 }
 
 export function getDistanceSqr(x1: IMovable, x2: IMovable): number {

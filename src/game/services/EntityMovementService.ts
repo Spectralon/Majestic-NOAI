@@ -14,7 +14,7 @@ export class EntityMovementService implements IEntityMovementService {
     }
 
     async move(entityId: string, target: Vector2): Promise<void> {
-        const entity: IEntity | undefined = this._gameLoop.world.getEntity(entityId);
+        const entity: IEntity | undefined = this._gameLoop.getEntity(entityId);
         if (!entity)
             throw new Error(`Entity ${entityId} not found`);
         return entity.move(target);

@@ -18,11 +18,11 @@ export class SpawnPlayer implements ICommand<string> {
         this._config = staticData.config;
     }
 
-    execute(args: Record<string, unknown>): Promise<string> {
+    async execute(args: Record<string, unknown>): Promise<string> {
         const x = Math.random() * (this._config.WORLD.width - 2 * this._config.PLAYER.radius);
         const y = Math.random() * (this._config.WORLD.height - 2 * this._config.PLAYER.radius);
         const player: Player = this._factory.createPLayer(new Vector2(x, y));
-        this._gameLoop.world.spawn(player);
+        await this._gameLoop.spawn(player);
         return Promise.resolve(player.id);
     }
 }

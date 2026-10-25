@@ -18,27 +18,27 @@ export class GroundItemService implements IGroundItemService {
     constructor(
         private readonly _factory: IGameFactory,
         private readonly _inventoryService: IInventoryService,
-        private readonly _gameLoop: GameLoop,
+        private readonly _game: GameLoop,
         _staticData: StaticDataService,
     ) {
         this._pickupRadiusSqr = _staticData.config.PLAYER.groundItemsPickupRadius ** 2;
     }
 
     async drop(playerId: string, itemId: string): Promise<GroundItem> {
-        const player = Utils.getPlayer(this._gameLoop, playerId);
+        const player = Utils.getPlayer(this._game, playerId);
         const item = await this._inventoryService.remove(playerId, itemId);
         const groundItem = this._factory.createDrop(item);
         await groundItem.move(player.position);
-        this._gameLoop.world.spawn(groundItem);
+        await this._game.spawn(groundItem);
         return Promise.resolve(groundItem);
     }
 
     async pickup(playerId: string, itemId: string): Promise<void> {
-        const player = Utils.getPlayer(this._gameLoop, playerId);
-        const groundItem = Utils.getGroundItem(this._gameLoop, itemId);
+        const player = Utils.getPlayer(this._game, playerId);
+        const groundItem = Utils.getGroundItem(this._game, itemId);
         if (
             Utils.getDistanceSqr(player, groundItem) > this._pickupRadiusSqr
-            || !this._gameLoop.world.despawn(groundItem)
+            || !await this._game.despawn(groundItem)
         )
             return;
         return this._inventoryService.add(playerId, groundItem.item);

@@ -8,13 +8,16 @@ import {IInventoryService, InventoryService} from "../game/services/InventorySer
 import {GroundItemService, IGroundItemService} from "../game/services/GroundItemService";
 import {EntityMovementService, IEntityMovementService} from "../game/services/EntityMovementService";
 import {GameServer} from "./GameServer";
+import {IStorage} from "./storage/IStorage";
+import {RuntimeStorage} from "./storage/RuntimeStorage";
 
 export class BootstrapService {
     async main(): Promise<void> {
         const staticData: StaticDataService = new StaticDataService();
+        const storage: IStorage = new RuntimeStorage(staticData);
         const registry: IGameRegistry = new GameRegistry();
         const factory: GameFactory = new GameFactory(registry, staticData);
-        const gameLoop = new GameLoop(staticData);
+        const gameLoop = new GameLoop(storage, staticData);
 
         const movementService: IEntityMovementService = new EntityMovementService(gameLoop);
         const inventoryService: IInventoryService = new InventoryService(factory, gameLoop);
@@ -34,7 +37,7 @@ export class BootstrapService {
             movementService,
         );
 
-        gameLoop.on('tick', e => server.broadcast('tick', gameLoop.world));
+        gameLoop.on('tick', world => server.broadcast('tick', world));
 
         await server.start();
         gameLoop.start();

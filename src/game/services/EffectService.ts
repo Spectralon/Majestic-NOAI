@@ -2,7 +2,7 @@ import {IGameFactory} from "../../infrastructure/GameFactory";
 import {GameLoop} from "../../infrastructure/GameLoop";
 
 export interface IEffectService {
-    addEffect<T>(effectType: string, target: T): void;
+    addEffect<T>(effectType: string, target: T): Promise<void>;
 }
 
 export class EffectService implements IEffectService {
@@ -12,8 +12,8 @@ export class EffectService implements IEffectService {
     ) {
     }
 
-    addEffect<T>(effectType: string, target: T) {
+    async addEffect<T>(effectType: string, target: T) {
         const effect = this._factory.createEffect<T>(effectType, target);
-        this._gameLoop.world.spawn(effect);
+        await this._gameLoop.spawn(effect);
     }
 }
