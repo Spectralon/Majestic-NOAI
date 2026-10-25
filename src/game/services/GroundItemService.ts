@@ -16,17 +16,16 @@ export class GroundItemService implements IGroundItemService {
     readonly _pickupRadiusSqr: number;
 
     constructor(
-        private readonly _registry: IGameRegistry,
         private readonly _factory: IGameFactory,
-        private readonly _gameLoop: GameLoop,
         private readonly _inventoryService: IInventoryService,
+        private readonly _gameLoop: GameLoop,
         _staticData: StaticDataService,
     ) {
         this._pickupRadiusSqr = _staticData.config.PLAYER.groundItemsPickupRadius ** 2;
     }
 
     async drop(playerId: string, itemId: string): Promise<GroundItem> {
-        const player = Utils.getPlayer(this._registry, playerId);
+        const player = Utils.getPlayer(this._gameLoop, playerId);
         const item = await this._inventoryService.remove(playerId, itemId);
         const groundItem = this._factory.createDrop(item);
         await groundItem.move(player.position);
@@ -35,8 +34,8 @@ export class GroundItemService implements IGroundItemService {
     }
 
     async pickup(playerId: string, itemId: string): Promise<void> {
-        const player = Utils.getPlayer(this._registry, playerId);
-        const groundItem = Utils.getGroundItem(this._registry, itemId);
+        const player = Utils.getPlayer(this._gameLoop, playerId);
+        const groundItem = Utils.getGroundItem(this._gameLoop, itemId);
         if (
             Utils.getDistanceSqr(player, groundItem) > this._pickupRadiusSqr
             || !this._gameLoop.world.despawn(groundItem)

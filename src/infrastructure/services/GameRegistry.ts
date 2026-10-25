@@ -4,8 +4,6 @@ export interface IGameRegistry {
     register(entity: IId, id?: string): void;
 
     unregister(entity: IId): void;
-
-    getEntity(entityId: string): IId | undefined;
 }
 
 export class GameRegistry implements IGameRegistry {
@@ -38,10 +36,6 @@ export class GameRegistry implements IGameRegistry {
         if (key)
             this._objects.delete(key);
         this._index.delete(entity);
-    }
-
-    getEntity(entityId: string): IId | undefined {
-        return this._objects.get(entityId);
     }
 
     private nextId(): string {

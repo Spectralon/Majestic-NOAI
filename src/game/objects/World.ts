@@ -25,4 +25,8 @@ export class World implements ITickable {
         this._currentTick++;
         return this._entities.length > 0;
     }
+
+    getEntity(entityId: string): IEntity | undefined {
+        return this._entities.find(e => e.id === entityId);
+    }
 }

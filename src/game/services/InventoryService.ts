@@ -3,6 +3,7 @@ import {IGameRegistry} from "../../infrastructure/services/GameRegistry";
 import {IInventory} from "../objects/Inventory";
 import {IGameFactory} from "../../infrastructure/GameFactory";
 import * as Utils from "../../utils/Utils";
+import {GameLoop} from "../../infrastructure/GameLoop";
 
 export interface IInventoryService {
     addNew(playerId: string, itemType: string, count: number): Promise<void>;
@@ -18,8 +19,8 @@ export interface IInventoryService {
 
 export class InventoryService implements IInventoryService {
     constructor(
-        private readonly _registry: IGameRegistry,
         private readonly _factory: IGameFactory,
+        private readonly _gameLoop: GameLoop,
     ) {
     }
 
@@ -44,7 +45,7 @@ export class InventoryService implements IInventoryService {
     }
 
     async use(playerId: string, itemId: string): Promise<void> {
-        const player = Utils.getPlayer(this._registry, playerId);
+        const player = Utils.getPlayer(this._gameLoop, playerId);
         const item: IItemInstance | undefined = player.inventory.items.find(e => e.id === itemId);
         if (!item)
             throw new Error(`Could not find item id ${itemId} in inventory of ${playerId}`);
@@ -54,6 +55,6 @@ export class InventoryService implements IInventoryService {
     }
 
     getInventory(playerId: string): IInventory {
-        return Utils.getPlayer(this._registry, playerId).inventory;
+        return Utils.getPlayer(this._gameLoop, playerId).inventory;
     }
 }

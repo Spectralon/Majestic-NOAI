@@ -16,9 +16,9 @@ export class BootstrapService {
         const factory: GameFactory = new GameFactory(registry, staticData);
         const gameLoop = new GameLoop(staticData);
 
-        const movementService: IEntityMovementService = new EntityMovementService(registry);
-        const inventoryService: IInventoryService = new InventoryService(registry, factory);
-        const groundItemService: IGroundItemService = new GroundItemService(registry, factory, gameLoop, inventoryService, staticData);
+        const movementService: IEntityMovementService = new EntityMovementService(gameLoop);
+        const inventoryService: IInventoryService = new InventoryService(factory, gameLoop);
+        const groundItemService: IGroundItemService = new GroundItemService(factory, inventoryService, gameLoop, staticData);
         const effectService: IEffectService = new EffectService(factory, gameLoop);
 
         const commandService: CommandService = new CommandService();
