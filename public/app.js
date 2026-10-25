@@ -54,10 +54,11 @@ function drawField() {
 }
 
 function drawItem(groundItem) {
-    canvas.beginPath();
     let x = sc(groundItem.position.x);
     let y = sc(groundItem.position.y);
     let r = sc(config.ITEMS.radius);
+
+    canvas.beginPath();
     canvas.arc(x, y, r, 0, 2 * Math.PI);
     canvas.fillStyle = config.ITEMS.prototypes[groundItem.item.type].color;
     canvas.fill();
@@ -67,19 +68,35 @@ function drawPlayer(player) {
     let barHeight = sc(4);
     let barInterval = sc(2);
 
-    canvas.beginPath();
-    let x = sc(+player.position.x);
-    let y = sc(+player.position.y);
+    let x = sc(player.position.x);
+    let y = sc(player.position.y);
     let r = sc(config.PLAYER.radius);
 
+    canvas.beginPath();
     canvas.arc(x, y, r, 0, 2 * Math.PI);
     canvas.fillStyle = config.PLAYER.color;
     canvas.fill();
+
+    for (let i = 0; i < player.inventory.length; i++)
+        drawInvItem(player, i);
 
     drawLabel(player);
     drawHP(player);
     drawArmor(player);
     drawAmmo(player);
+
+    function drawInvItem(player, idx) {
+        const item = player.inventory[idx];
+        const angle = 2 * idx * Math.PI / player.inventory.length;
+        const xi = x + r * Math.cos(angle) * 0.8;
+        const yi = y + r * Math.sin(angle) * 0.8;
+        const ri = sc(config.ITEMS.radius * item.count / 5);
+
+        canvas.beginPath();
+        canvas.arc(xi, yi, ri, 0, 2 * Math.PI);
+        canvas.fillStyle = config.ITEMS.prototypes[item.type].color;
+        canvas.fill();
+    }
 
     function drawLabel(player) {
         canvas.fillStyle = "gray";
