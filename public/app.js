@@ -26,7 +26,7 @@ function processMessage(e) {
             draw(state);
             break;
         case 'error':
-            console.error('Error:', e);
+            console.error('Error:', e.data);
             break;
         default:
             console.warn('Unable to process message:', e);
