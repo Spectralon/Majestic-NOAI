@@ -26,12 +26,14 @@ async function startDemo() {
             break;
     }
 
-    pickupItem(state.players[0].id, state.groundItems[0].id);
-    pickupItem(state.players[1].id, state.groundItems[1].id);
+    pickupItem(player(0).id, groundItem(0).id);
+    pickupItem(player(1).id, groundItem(1).id);
 
-    // useItem(player1.id, item1.id);
-    // useItem(player2.id, item2.id);
-    //
+    await forMs(500);
+
+    useItem(player(0).id, player(0).inventory[0].id);
+    useItem(player(1).id, player(1).inventory[0].id);
+
     // spawnDrop();
     //
     // let item3;
@@ -65,6 +67,10 @@ function movePlayer(id, position) {
 
 function pickupItem(playerId, groundItemId) {
     sendMessage({type: "pickup", playerId: playerId, groundItemId: groundItemId});
+}
+
+function useItem(playerId, itemId) {
+    sendMessage({type: "use", playerId: playerId, itemId: itemId});
 }
 
 function huntDrop(player, item) {
