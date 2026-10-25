@@ -13,15 +13,15 @@ async function startDemo() {
 
     await forMs();
 
-    huntDrop(state.players[0], state.groundItems[0]);
-    huntDrop(state.players[1], state.groundItems[1]);
+    huntDrop(player(0), groundItem(0));
+    huntDrop(player(1), groundItem(1));
 
     while (true) {
-        const p1p1 = state.players[0].position;
-        const p2p1 = state.players[1].position;
+        const p1p1 = player(0).position;
+        const p2p1 = player(1).position;
         await forMs(500);
-        const p1p2 = state.players[0].position;
-        const p2p2 = state.players[1].position;
+        const p1p2 = player(0).position;
+        const p2p2 = player(1).position;
         if (len(subtract(p1p2, p1p1)) + len(subtract(p2p2, p2p1)) <= 0.01)
             break;
     }
@@ -41,6 +41,14 @@ async function startDemo() {
     //
     // pickupItem(player1.id, item3.id);
     // pickupItem(player2.id, item3.id);
+
+    function player(i) {
+        return state.players[i];
+    }
+
+    function groundItem(i) {
+        return state.groundItems[i];
+    }
 }
 
 function spawnPlayer() {

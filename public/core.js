@@ -44,10 +44,12 @@ class GroundItem {
 }
 
 class InventoryItem {
+    id;
     type;
     count;
 
     constructor(config) {
+        this.id = config.id;
         this.type = config.type;
         this.count = config._count;
     }

@@ -45,6 +45,6 @@ export class GameRegistry implements IGameRegistry {
     }
 
     private nextId(): string {
-        return `entity_${this._counter++}`;
+        return `reg_${this._counter++}`;
     }
 }
