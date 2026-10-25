@@ -21,7 +21,10 @@ async function startDemo() {
     useItem(pid1, player(pid1).inventory[0]?.id);
     useItem(pid2, player(pid2).inventory[0]?.id);
 
-    const did3 = await spawnDrop();
+    const did3 =
+        await spawnDropAt(
+            multiply(add(player(pid1).position, player(pid2).position), 0.5)
+        );
     await forMs(500);
 
     await Promise.all([
