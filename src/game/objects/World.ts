@@ -12,8 +12,12 @@ export class World implements ITickable {
         this._entities.push(entity);
     }
 
-    despawn(entity: IEntity): void {
-        this._entities.splice(this._entities.indexOf(entity), 1);
+    despawn(entity: IEntity): boolean {
+        let idx = this._entities.indexOf(entity);
+        if (!entity || idx < 0)
+            return false;
+        this._entities.splice(idx, 1);
+        return true;
     }
 
     tick(): boolean {
