@@ -1,6 +1,6 @@
 import {ICommand} from "./ICommand";
-import {Vector2} from "../../../game/objects/core";
-import {IEntityMovementService} from "../../../game/services/EntityMovementService";
+import {Vector2} from "../../game/objects/core";
+import {IEntityMovementService} from "../../game/services/EntityMovementService";
 
 export class MovePlayer implements ICommand<void> {
     readonly type: string = 'move';

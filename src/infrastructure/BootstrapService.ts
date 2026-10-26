@@ -3,13 +3,13 @@ import {GameFactory} from "./GameFactory";
 import {GameRegistry, IGameRegistry} from "./services/GameRegistry";
 import {EffectService, IEffectService} from "../game/services/EffectService";
 import {GameLoop} from "./GameLoop";
-import {CommandService} from "./services/CommandService";
+import {CommandService} from "../server/CommandService";
 import {IInventoryService, InventoryService} from "../game/services/InventoryService";
 import {GroundItemService, IGroundItemService} from "../game/services/GroundItemService";
 import {EntityMovementService, IEntityMovementService} from "../game/services/EntityMovementService";
-import {GameServer} from "./GameServer";
-import {IStorage} from "./storage/IStorage";
-import {RuntimeStorage} from "./storage/RuntimeStorage";
+import {GameServer} from "../server/GameServer";
+import {IStorage} from "../storage/IStorage";
+import {RuntimeStorage} from "../storage/RuntimeStorage";
 
 export class BootstrapService {
     async main(): Promise<void> {

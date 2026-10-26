@@ -1,7 +1,7 @@
 import {World} from "../game/objects/World";
 import {StaticDataService} from "./services/StaticDataService";
 import EventEmitter from "node:events";
-import {IStorage} from "./storage/IStorage";
+import {IStorage} from "../storage/IStorage";
 import {IEntity} from "../game/objects/abstract";
 
 export class GameLoop extends EventEmitter {

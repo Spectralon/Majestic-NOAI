@@ -1,9 +1,9 @@
 import {ICommand} from "./ICommand";
-import {IGameFactory} from "../../GameFactory";
-import {StaticDataService} from "../StaticDataService";
-import {GameLoop} from "../../GameLoop";
-import {Player} from "../../../game/objects/Player";
-import {Vector2} from "../../../game/objects/core";
+import {IGameFactory} from "../../infrastructure/GameFactory";
+import {StaticDataService} from "../../infrastructure/services/StaticDataService";
+import {GameLoop} from "../../infrastructure/GameLoop";
+import {Player} from "../../game/objects/Player";
+import {Vector2} from "../../game/objects/core";
 
 export class SpawnPlayer implements ICommand<string> {
     readonly type: string = 'spawn';

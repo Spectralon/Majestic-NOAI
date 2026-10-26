@@ -1,6 +1,6 @@
 import {IStorage} from "./IStorage";
-import {World} from "../../game/objects/World";
-import {StaticDataService} from "../services/StaticDataService";
+import {World} from "../game/objects/World";
+import {StaticDataService} from "../infrastructure/services/StaticDataService";
 
 export class RuntimeStorage implements IStorage {
     private readonly _ping: number;

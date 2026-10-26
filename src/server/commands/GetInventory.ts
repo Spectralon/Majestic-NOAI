@@ -1,6 +1,6 @@
 import {ICommand} from "./ICommand";
-import {IItemInstance} from "../../../game/objects/abstract";
-import {IInventoryService} from "../../../game/services/InventoryService";
+import {IItemInstance} from "../../game/objects/abstract";
+import {IInventoryService} from "../../game/services/InventoryService";
 
 export class GetInventory implements ICommand<IItemInstance[]> {
     readonly type: string = 'get_inventory';

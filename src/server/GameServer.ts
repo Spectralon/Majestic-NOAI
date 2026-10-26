@@ -1,6 +1,6 @@
-import {StaticDataService} from "./services/StaticDataService";
+import {StaticDataService} from "../infrastructure/services/StaticDataService";
 import {WebSocket, WebSocketServer} from "ws";
-import {ICommandService} from "./services/CommandService";
+import {ICommandService} from "./CommandService";
 
 export class GameServer {
     private readonly _wss: WebSocketServer;

@@ -1,5 +1,5 @@
 import {ICommand} from "./ICommand";
-import {IInventoryService} from "../../../game/services/InventoryService";
+import {IInventoryService} from "../../game/services/InventoryService";
 
 export class UseItem implements ICommand<void> {
     readonly type: string = 'use';
